@@ -1,0 +1,63 @@
+<mat-drawer-container class="example-container" autosize>
+  <!-- SIDEBAR INICIO -->
+  <mat-drawer [opened]="true" #drawer class="example-sidenav" mode="side">
+
+    <mat-nav-list>
+      <a
+        mat-list-item
+        routerLink="home"
+        routerLinkActive
+        #homeLink="routerLinkActive"
+        [activated]="homeLink.isActive"
+        >Inicio</a
+      >
+      <a
+        mat-list-item
+        routerLink="courses"
+        routerLinkActive
+        #coursesLink="routerLinkActive"
+        [activated]="coursesLink.isActive"
+        >Cursos</a
+      >
+      <a mat-list-item>Alumnos</a>
+    
+      <a
+        *ngIf="(authUser$ | async)?.role === 'ADMIN'"
+        mat-list-item
+        routerLink="clases"
+        routerLinkActive
+        #clasesLink="routerLinkActive"
+        [activated]="clasesLink.isActive"
+        >Clases</a
+      >
+      <a (click)="logout()" mat-list-item>Cerrar sesion</a>
+    </mat-nav-list>
+
+    {{ authUser$ | async | json }}
+  </mat-drawer>
+  <!-- SIDEBAR FIN -->
+
+  <!-- MAIN CONTENT INICIO-->
+  <div class="example-sidenav-content">
+
+    <!-- TOOLBAR INICIO -->
+    <mat-toolbar color="primary">
+      <button
+        (click)="drawer.toggle()"
+        mat-icon-button
+        class="example-icon"
+        aria-label="Example icon-button with menu icon"
+      >
+        <mat-icon>menu</mat-icon>
+      </button>
+      <span>Mi gestion Lucas app</span>
+      <span class="example-spacer"></span>
+    </mat-toolbar>
+    <!-- TOOLBAR FIN -->
+
+    <main class="p-5">
+      <router-outlet />
+    </main>
+  </div>
+  <!-- MAIN CONTENT FIN-->
+</mat-drawer-container>
